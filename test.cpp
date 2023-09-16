@@ -10,6 +10,10 @@ void tcase() {
 		cout << 0 << '\n';
 		return ;
 	}
+	if (sz == 4 && s[1] == s[2]) {
+		cout << 1 << '\n';
+		return;
+	}
 	map<char, int>mp;
 	for (auto &S : s)
 		mp[S]++;
@@ -42,7 +46,25 @@ void tcase() {
 		cout << 1 << '\n';
 		return;
 	}
-	cout << int(log2(sz)) << '\n';
+	if (odd == even) {
+		all_same = true;
+		for (auto i = 0; i < sz; i += 2)		{
+			all_same &= s[i] == ch;
+		}
+		if (all_same) {
+			cout << 1 << '\n';
+			return;
+		}
+		all_same = true;
+		for (auto i = 1; i < sz; i += 2)		{
+			all_same &= s[i] == ch;
+		}
+		if (all_same) {
+			cout << 1 << '\n';
+			return;
+		}
+	}
+	cout << int(__lg(sz)) << '\n';
 }
 int32_t main() {
 	ios_base::sync_with_stdio(false);
