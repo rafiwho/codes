@@ -2,30 +2,47 @@
 using namespace std;
 
 void tcase() {
-	int64_t n, k;
-	cin >> n >> k;
-	vector<int>v(n);
-	for (auto &A : v)
-		cin >> A;
-	sort(v.rbegin(), v.rend());
-	auto posi = [&](int x)->bool{
-		int64_t cnt = 0;
-		for (auto i = 0; i < n; ++i) {
-			cnt += (v[i] / x);
-		}
-		return cnt >= k;
-	};
-	int lo = 1, hi = 1e9, ans = 0;
-	while (hi >= lo) {
-		int mid = (hi + lo) >> 1;
-		if (posi(mid)) {
-			ans = mid;
-			lo = mid + 1;
-		} else {
-			hi = mid - 1;
+	string s;
+	cin >> s;
+	size_t sz = s.size();
+	set<char>st(s.begin(), s.end());
+	if (st.size() == 1) {
+		cout << 0 << '\n';
+		return ;
+	}
+	map<char, int>mp;
+	for (auto &S : s)
+		mp[S]++;
+	int mx_fre = 0;
+	char ch;
+	for (auto [x, y] : mp) {
+		if (y > mx_fre) {
+			mx_fre = y;
+			ch = x;
 		}
 	}
-	cout << ans << '\n';
+	vector<int>posi;
+	for (auto i = 0; i < sz; ++i)		{
+		if (s[i] == ch)
+			posi.push_back(i);
+	}
+	int odd = 0;
+	int even = 0;
+	for (auto i = 0; i < posi.size(); ++i)		{
+		if (posi[i] & 1)
+			odd++;
+		else
+			even++;
+	}
+	bool all_same = true;
+	for (auto i = odd > even ? 1 : 0; i < sz; i += 2)		{
+		all_same &= s[i] == ch;
+	}
+	if (all_same) {
+		cout << 1 << '\n';
+		return;
+	}
+	cout << int(log2(sz)) << '\n';
 }
 int32_t main() {
 	ios_base::sync_with_stdio(false);
