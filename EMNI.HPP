@@ -1,4 +1,3 @@
-
 void ___(int x) {cerr << x;}
 void ___(long x) {cerr << x;}
 void ___(long long x) {cerr << x;}
