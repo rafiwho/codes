@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-#include <cstdio>
 using namespace std;
 
 void tcase() {
@@ -12,11 +11,9 @@ void tcase() {
 		for (auto w = W; w >= 0; --w) {
 			if (weight[i - 1] <= w)
 				dp[w] = max(dp[w], profit[i - 1] + dp[w - weight[i - 1]]);
-			// cout << "w = " << w << ' ' << "dp = " << dp[w] << '\n';
 		}
-		cout << '\n';
 	}
-	// cout << dp[W] << '\n';
+	cout << dp[W] << '\n';
 }
 int32_t main() {
 	ios_base::sync_with_stdio(false);

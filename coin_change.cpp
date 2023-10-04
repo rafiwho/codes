@@ -4,10 +4,12 @@ using namespace std;
 void tcase() {
 	int n , s;
 	cin >> n >> s;
+
 	vector<int>c(n);
 	for (auto i = 0LL; i < n; ++i) {
 		cin >> c[i];
 	}
+
 	vector<int>dp(s + 1, s + 1);
 	dp[0] = 0;
 	for (auto i = 1LL; i <= s; ++i)
