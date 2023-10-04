@@ -7,12 +7,11 @@ void tcase() {
 	int W = 5;
 	int dp[W + 1];
 	memset(dp, 0, sizeof dp);
-	for (auto i = 1; i < int(profit.size()) + 1; ++i) {
-		for (auto w = W; w >= 0; --w) {
+	for (auto i = 1; i < int(profit.size()) + 1; ++i)
+		for (auto w = W; w >= 0; --w)
 			if (weight[i - 1] <= w)
 				dp[w] = max(dp[w], profit[i - 1] + dp[w - weight[i - 1]]);
-		}
-	}
+
 	cout << dp[W] << '\n';
 }
 int32_t main() {
