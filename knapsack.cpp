@@ -1,12 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
-
 void tcase() {
 	int n , sack;
 	cin >> n >> sack;
