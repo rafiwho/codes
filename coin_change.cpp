@@ -2,21 +2,17 @@
 using namespace std;
 
 void tcase() {
-	int n , s;
-	cin >> n >> s;
+	int ammount = 12;
+	vector<int>coins = {1, 2, 3, 4, 5};
+	vector<int>dp(ammount + 1, ammount + 1);
 
-	vector<int>c(n);
-	for (auto i = 0LL; i < n; ++i) {
-		cin >> c[i];
-	}
-
-	vector<int>dp(s + 1, s + 1);
 	dp[0] = 0;
-	for (auto i = 1LL; i <= s; ++i)
-		for (auto x : c)
-			if (i - x >= 0)
-				dp[i] = min(dp[i], dp[i - x] + 1);
-	cout << (dp[s] == s + 1 ? -1 : dp[s]) << '\n';
+	for (auto a = 1LL; a <= ammount; ++a)
+		for (auto c : coins)
+			if (a - c >= 0)
+				dp[a] = min(dp[a], dp[a - c] + 1);
+
+	cout << dp[ammount] << '\n';
 }
 int32_t main() {
 	ios_base::sync_with_stdio(false);
