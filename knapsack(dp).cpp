@@ -1,6 +1,4 @@
 #include <bits/stdc++.h>
-#include <cstring>
-#include <vector>
 using namespace std;
 
 void tcase() {
