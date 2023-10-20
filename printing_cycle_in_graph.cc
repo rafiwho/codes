@@ -1,34 +1,12 @@
-#include <algorithm>
-#include <cmath>
-#include <cstring>
-#include <functional>
-#include <iomanip>
 #include <iostream>
-#include <map>
-#include <numeric>
-#include <queue>
-#include <set>
 #include <vector>
 using namespace std;
-
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
-
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(),(x).end()
 template<typename T>
-void output_vector(const vector<T> &v, bool add_one = false, int start = -1, int end = -1) {
-	if (start < 0) start = 0;
-	if (end < 0) end = int(v.size());
+void output_vector(const vector<T> &v, bool add_one = false) {
+	int start = 0 , end = int(v.size());
 
 	for (int i = start; i < end; i++)
-		cout << v[i] + (add_one ? 1 : 0) << (i < end - 1 ? ' ' : '\n');
+		cout << v[i] + (add_one ? 1 : 0) << " \n"[i == end - 1];
 }
 void tcase() {
 	int n;
