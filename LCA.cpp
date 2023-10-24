@@ -1,67 +1,46 @@
-#include <algorithm>
-#include <iostream>
-#include <vector>
+#include <bits/stdc++.h>
 using namespace std;
 
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
-
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(),(x).end()
-const int N = int(1e5 + 7);
+constexpr int N = 1E5;
 vector<int>v[N];
-int pr[N];
-void dfs(int ver , int par = -1) {
-	pr[ver] = par;
-	for (auto child : v[ver]) {
-		if (par == child)
-			continue;
-		else
-			dfs(child, ver);
+int par[N];
+void dfs(int ver, int p = -1) {
+	par[ver] = p;
+	for (int child : v[ver]) {
+		if (child == p)continue;
+		dfs(child, ver);
 	}
 }
-
-vector<int> path(int v) {
+vector<int>path(int ver) {
 	vector<int>ans;
-	while (v != -1) {
-		ans.pb(v);
-		v = pr[v];
+	while (ver != -1) {
+		ans.emplace_back(ver);
+		ver = par[ver];
 	}
-	reverse(all(ans));
-	return ans;
+	reverse(ans.begin(), ans.end());
+	return  ans;
 }
 void tcase() {
-	int n;
-	cin >> n;
+	int n; cin >> n;
 	for (int i = 0; i < n - 1; ++i) {
-		int x , y;
-		cin >> x >> y;
-		v[x].pb(y);
-		v[y].pb(x);
+		int x, y; cin >> x >> y;
+		v[x].emplace_back(y);
+		v[y].emplace_back(x);
 	}
-
 	dfs(1);
-	// enter two node to find their lca
-	int a, b;
-	cin >> a >> b;
-	vector<int>path_a = path(a);
-	vector<int>path_b = path(b);
-
-
+	int x, y;
+	cin >> x >> y;
+	auto path_x = path(x);
+	auto path_y = path(y);
+	int sz = min(path_x.size(), path_y.size());
 	int lca = -1;
-	for (int i = 0; i < int(min(path_a.size() , path_b.size())); ++i) {
-		if (path_a[i] == path_b[i])
-			lca = path_a[i] ;
-		else {
+	for (int i = 0; i < sz; ++i) {
+		if (path_x[i] == path_y[i])
+			lca = path_x[i];
+		else
 			break;
-		}
 	}
+
 	cout << lca << '\n';
 }
 int32_t main() {
