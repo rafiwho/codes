@@ -1,11 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(),(x).end()
 
 const int maxx = 110;
 const int  inf = 1e9;
@@ -31,7 +26,7 @@ void tcase() {
 		for (int j = 1; j <= y; j++) {
 			int nn;
 			cin >> nn;
-			v[x].pb(nn);
+			v[x].emplace_back(nn);
 			dis[x][nn] = 1;
 		}
 	}
