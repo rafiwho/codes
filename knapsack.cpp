@@ -1,32 +1,30 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
+constexpr int INF = 1E9;
+constexpr int N = 1E6 + 6;
+int ans = -INF;
+int n , sack;
+vector<int>items(N), pr(N);
+void knapsack(int i, int weight , int value) {
 
+	if (i > n)
+		return;
+	else if (i == n) {
+		if (weight <= sack) {
+			ans = max(ans , value);
+		}
+		return;
+	}
+
+	knapsack(i + 1, weight, value);
+	knapsack(i + 1, weight + items[i], value + pr[i]);
+};
 void tcase() {
-	int n , sack;
 	cin >> n >> sack;
-	vector<int>items(n), pr(n);
-
 	for (int i = 0; i < n; ++i) {
 		cin >> items[i] >> pr[i];
 	}
-
-	int ans = INT32_MIN;
-	auto knapsack = [&](auto && knapsack , int i, int weight , int value)->void{
-
-		if (i > n)
-			return;
-		else if (i == n) {
-			if (weight <= sack) {
-				ans = max(ans , value);
-			}
-			return;
-		}
-
-		knapsack(knapsack, i + 1, weight, value);
-		knapsack(knapsack, i + 1, weight + items[i], value + pr[i]);
-	};
-
-	knapsack(knapsack, 0, 0, 0);
+	knapsack(0, 0, 0);
 	cout << ans << '\n';
 }
 int32_t main() {
