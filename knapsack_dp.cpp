@@ -2,9 +2,9 @@
 using namespace std;
 
 void tcase() {
-	vector<int>profit = { 1, 2};
-	vector<int>weight = { 1, 2};
-	int W = 5;
+	vector<int>profit = {30, 50, 60};
+	vector<int>weight = {3, 4, 5};
+	int W = 8;
 	int dp[W + 1];
 	memset(dp, 0, sizeof dp);
 	for (auto i = 1; i < int(profit.size()) + 1; ++i)

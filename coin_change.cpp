@@ -2,8 +2,8 @@
 using namespace std;
 
 void tcase() {
-	int ammount = 12;
-	vector<int>coins = {1, 2, 3, 4, 5};
+	int ammount = 11;
+	vector<int>coins = {1, 5, 7};
 	vector<int>dp(ammount + 1, ammount + 1);
 
 	dp[0] = 0;

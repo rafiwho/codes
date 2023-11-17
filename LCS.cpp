@@ -1,37 +1,50 @@
 #include "bits/stdc++.h"
 using namespace std;
+template <typename T>
+T Construct_LCS(const T &S, const T &t) {
+	int n = int(S.size());
+	int m = int(t.size());
+	vector<int> dp(m + 1, 0);
+	vector<vector<bool>> previous(n + 1, vector<bool>(m + 1, false));
 
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
+	for (int i = 0; i < n; i++) {
+		vector<int> next_dp(m + 1, 0);
 
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(),(x).end()
+		for (int j = 0; j < m; j++)
+			if (S[i] == t[j]) {
+				next_dp[j + 1] = dp[j] + 1;
+			} else {
+				next_dp[j + 1] = max(dp[j + 1], next_dp[j]);
+				previous[i + 1][j + 1] = next_dp[j + 1] == next_dp[j];
+			}
 
-const int N = 1e3;
-std::vector<std::vector<int>>dp(N, std::vector<int>(N, -1));
+		swap(dp, next_dp);
+	}
 
-int LCS( string &s1 , string &s2, int i = 0, int j = 0) {
-	if (i == int(s1.size()) || j == int(s2.size()))
-		return 0;
-	if (dp[i][j] != -1)
-		return dp[i][j];
+	int a = n, b = m;
+	T common;
 
-	int ans = LCS(s1, s2, i + 1, j);
-	ans = max(ans , LCS(s1, s2, i, j + 1));
-	ans = max(ans , LCS(s1, s2, i + 1, j + 1) + (s1[i] == s2[j]));
-	return dp[i][j] = ans;
+	while (a > 0 && b > 0) {
+		if (S[a - 1] == t[b - 1]) {
+			common.push_back(S[a - 1]);
+			a--; b--;
+			continue;
+		}
+
+		if (previous[a][b])
+			b--;
+		else
+			a--;
+	}
+
+	reverse(common.begin(), common.end());
+	return common;
 }
 
 void tcase() {
 	string s1 , s2;
 	cin >> s1 >> s2;
-	cout << LCS(s1, s2) << '\n';
+	cout << Construct_LCS(s1, s2) << '\n';
 }
 int32_t main() {
 	ios_base::sync_with_stdio(0);
