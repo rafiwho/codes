@@ -1,70 +1,63 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <bits/stdc++.h>
+using namespace std;
 
-typedef struct node{
+typedef struct Q {
 	int data;
-	struct node* next;
-}node;
-    node* f = NULL;
-    node* r = NULL;
-void QueueTraversal(node* f)
-{
-	node* ptr = f;
-	printf("Printing the Linkedlist\n");
-	while(ptr!=NULL)
-	{
-		printf("%d\n",ptr->data);
-		ptr = ptr->next;
+	Q*next;
+} Q;
+Q *f = nullptr;
+Q *r = nullptr;
+
+void push(int data) {
+	Q *new_node = (Q*)malloc(sizeof(Q));
+	if (new_node == nullptr) {
+		exit(0);
+	}
+	new_node->data = data;
+	new_node->next = nullptr;
+	if (f == r && f == nullptr) {
+		f = new_node;
+		r = new_node;
+	} else {
+		r->next = new_node;
+		r = new_node;
 	}
 }
 
-void enqueue(int value)
-{
-	node* newNode = (node*) malloc(sizeof(node));
-	if(newNode == NULL) //checking heap is full or not
-		printf("Queue is full\n");
-	else if(f == NULL && r==NULL) //in case of empty Queue
-		{
-            newNode->data = value;
-		    newNode->next = NULL;
-			f= newNode;
-			r = newNode;
-		}
-	else
-		{
-            newNode->data = value;
-		    newNode->next = NULL;
-			r->next = newNode;
-			r = newNode;
-		}
-}
-
-
-int dequeue()
-{
-	int a = -1;
-	node* ptr = f;
-	if(f==NULL && r ==NULL)
-		printf("Queue is empty\n");
-	else{
-		f = f->next;
-		a = ptr->data;
-		free(ptr);
+void deq() {
+	if (f == r && f == nullptr) {
+		return ;
 	}
-	return a;
+	Q *temp = f;
+	f = f->next;
+	free(temp);
 }
+void trav() {
+	Q *temp = f;
+	while (temp != nullptr) {
+		cout << temp->data << '\n';
+		temp = temp->next;
+	}
+}
+void tcase() {
+	for (int i = 0; i < 10; ++i) {
+		push(i);
+	}
+	deq();
+	deq();
+	trav();
 
-int main()
-{
+}
+bool IS_EMAPTY() {
+	return f == r && f == nullptr;
+}
+int32_t main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
 
-	enqueue(4);
-	enqueue(8);
-	enqueue(10);
-	enqueue(15);
+	int t = 1;
+	//cin >> t;
 
-	int x = dequeue();
-	int y = dequeue();
-	printf("%d is dequed\n",x );
-	printf("%d is dequed\n",y );
-	QueueTraversal(f);
+	while (t-- > 0)
+		tcase();
 }

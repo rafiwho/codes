@@ -1,58 +1,57 @@
-#include<stdio.h>
-#include<stdlib.h>
-typedef struct stack
-{
+#include <bits/stdc++.h>
+using namespace std;
+
+typedef struct Stack {
     int data;
-    struct stack *next;
-}stack;
+    struct Stack*next;
+} Stack;
 
-//taking top golablly to avoid complexity
-stack *top = NULL;
+Stack *top = NULL;
 
-void push(int val);
-int pop();
-void display();
-
-int main(){
-
-    pop();
-    push(10);
-    push(20);
-    push(30);
-    push(40);
-    pop();
-    pop();
-
-    display();
+void insert(int data) {
+    Stack *temp = (Stack*)malloc(sizeof(Stack));
+    if (temp == NULL) {
+        exit(0);
+    }
+    temp->data = data;
+    temp->next = top;
+    top = temp;
 }
 
-void push(int val){
-    stack *newNode = (stack*)malloc(sizeof(stack));
-    if(newNode==NULL)
-        printf("Stack Overflowed");
-    else{
-        newNode->data = val;
-        newNode->next = top;
-        top = newNode;
+void pop() {
+    if (top == nullptr) {
+        exit(0);
+    }
+    Stack *temp = top;
+    top = top->next;
+    free(temp);
+}
+
+bool IS_EMPTY() {
+    return top == nullptr;
+}
+
+void PRINT() {
+    Stack *temp = top;
+    while (temp != nullptr) {
+        cout << temp->data << '\n';
+        temp = temp->next;
     }
 }
 
-int pop(){
-    int x =-1;
-    if(top == NULL)
-        printf("Stack Underflow\n");
-    else{
-        x = top->data;
-        stack *ptr = top;
-        top = top->next;
-        free(ptr);
+void tcase() {
+    for (int i = 0; i < 10; ++i) {
+        insert(i);
     }
-    return x;
+    cout << boolalpha << IS_EMPTY() << '\n';
 }
-void display(){
-    stack *ptr = top;
-    while(ptr!=NULL){
-        printf("%d ",ptr->data);
-        ptr = ptr->next;
-    }
+int32_t main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int t = 1;
+    //cin >> t;
+
+    while (t-- > 0)
+        tcase();
 }
