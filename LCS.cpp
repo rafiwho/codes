@@ -1,54 +1,38 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
-template <typename T>
-T Construct_LCS(const T &S, const T &t) {
-	int n = int(S.size());
-	int m = int(t.size());
-	vector<int> dp(m + 1, 0);
-	vector<vector<bool>> previous(n + 1, vector<bool>(m + 1, false));
+string c_lcs(const string &s1, const string &s2) {
+	int n = s1.size();
+	int m = s2.size();
+	int dp[n + 1][m + 1];
+	memset(dp, 0, sizeof(dp));
+	for (int i = 1; i <= n; ++i)
+		for (int j = 1; j <= m; ++j)
+			if (s1[i - 1] == s2[j - 1])
+				dp[i][j] = 1 + dp[i - 1][j - 1];
+			else
+				dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
 
-	for (int i = 0; i < n; i++) {
-		vector<int> next_dp(m + 1, 0);
 
-		for (int j = 0; j < m; j++)
-			if (S[i] == t[j]) {
-				next_dp[j + 1] = dp[j] + 1;
-			} else {
-				next_dp[j + 1] = max(dp[j + 1], next_dp[j]);
-				previous[i + 1][j + 1] = next_dp[j + 1] == next_dp[j];
-			}
-
-		swap(dp, next_dp);
-	}
-
-	int a = n, b = m;
-	T common;
-
-	while (a > 0 && b > 0) {
-		if (S[a - 1] == t[b - 1]) {
-			common.push_back(S[a - 1]);
-			a--; b--;
-			continue;
+	string con;
+	while (n > 0 && m > 0) {
+		if (s1[n - 1] == s2[m - 1]) {
+			con.push_back(s1[n - 1]);
+			n--, m--;
+		} else if (dp[n - 1][m] > dp[n][m - 1]) {
+			n--;
+		} else {
+			m--;
 		}
-
-		if (previous[a][b])
-			b--;
-		else
-			a--;
 	}
-
-	reverse(common.begin(), common.end());
-	return common;
+	return string(con.rbegin(), con.rend());
 }
-
 void tcase() {
-	string s1 , s2;
-	cin >> s1 >> s2;
-	cout << Construct_LCS(s1, s2) << '\n';
+	string a, b; cin >> a >> b;
+	cout << c_lcs(a, b) << '\n';
 }
 int32_t main() {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
 
 	int t = 1;
 	//cin >> t;

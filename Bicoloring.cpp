@@ -1,17 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
-
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(),(x).end()
 
 const int N = 210;
 std::vector<int> g[N];
@@ -39,8 +28,8 @@ void tcase() {
 		for (int i = 0; i < m; ++i) {
 			int x , y;
 			cin >> x >> y;
-			g[x].pb(y);
-			g[y].pb(x);
+			g[x].push_back(y);
+			g[y].push_back(x);
 		}
 
 		f = false;

@@ -9,8 +9,8 @@ void output_vector(const vector<T> &v, bool add_one = false) {
 		cout << v[i] + (add_one ? 1 : 0) << " \n"[i == end - 1];
 }
 void tcase() {
-	int n;
-	cin >> n;
+	int n, m;
+	cin >> n >> m;
 	vector<int>v(n + 1);
 	for (int i = 1; i <= n; ++i) {
 		cin >> v[i];

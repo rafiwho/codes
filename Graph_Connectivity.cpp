@@ -1,23 +1,11 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
-
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(),(x).end()
-
 const int N = 35;
 std::vector<int> v[N];
 bool vis[N];
 
-inline int char_to_ith_int(char ch) {
+int char_to_ith_int(char ch) {
 	return int(ch - 64);
 }
 
@@ -38,8 +26,8 @@ void tcase() {
 		if (int(s.size()) != 1) {
 			int a = char_to_ith_int(s[0]);
 			int b = char_to_ith_int(s[1]);
-			v[a].pb(b);
-			v[b].pb(a);
+			v[a].push_back(b);
+			v[b].push_back(a);
 		}
 		if (int(s.size()) == 1)
 			n = char_to_ith_int(s[0]);

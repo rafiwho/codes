@@ -1,18 +1,5 @@
 #include <bits/stdc++.h>
-#include <functional>
 using namespace std;
-
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
-
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(), (x).end()
 
 string s;
 const int64_t M = 998244353;

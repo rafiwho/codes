@@ -3,7 +3,7 @@ using namespace std;
 
 void tcase() {
 	vector<int>v = {2, 3, 4, 1, 3};
-	for (auto i = 1LL; i < int(v.size()); ++i) {
+	for (int i = 1LL; i < int(v.size()); ++i) {
 		int temp  = v[i];
 		int j = i - 1;
 		while (j >= 0 && v[j] > temp) {
@@ -12,7 +12,7 @@ void tcase() {
 		}
 		v[j + 1] = temp;
 	}
-	for (auto x : v)
+	for (int x : v)
 		cout << x << ' ';
 }
 int32_t main() {

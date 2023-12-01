@@ -2,17 +2,32 @@
 using namespace std;
 
 void tcase() {
-	vector<int>profit = {30, 50, 60};
-	vector<int>weight = {3, 4, 5};
-	int W = 8;
-	int dp[W + 1];
-	memset(dp, 0, sizeof dp);
-	for (auto i = 1; i < int(profit.size()) + 1; ++i)
-		for (auto w = W; w >= 0; --w)
-			if (weight[i - 1] <= w)
-				dp[w] = max(dp[w], profit[i - 1] + dp[w - weight[i - 1]]);
+	int n; cin >> n;
+	int sack_size; cin >> sack_size;
 
-	cout << dp[W] << '\n';
+	vector<int>profit(n);
+	for (int i = 0; i < n; ++i) {
+		cin >> profit[i];
+	}
+
+	vector<int>weight(n);
+	for (int i = 0; i < n; ++i) {
+		cin >> weight[i];
+	}
+
+
+	int dp[sack_size + 1];
+	memset(dp, 0, sizeof dp);
+
+	for (auto i = 1; i < int(profit.size()) + 1; ++i) {
+		for (auto w = sack_size; w >= 0; --w) {
+			if (weight[i - 1] <= w) {
+				dp[w] = max(dp[w], profit[i - 1] + dp[w - weight[i - 1]]);
+			}
+		}
+	}
+
+	cout << dp[sack_size] << '\n';
 }
 int32_t main() {
 	ios_base::sync_with_stdio(false);

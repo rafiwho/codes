@@ -11,11 +11,11 @@ void dfs1(int ver) {
 		if (!used[child])
 			dfs1(child);
 	}
-	order.emplace_back(ver);
+	order.emplace_back(ver); // order
 }
 void dfs2(int ver) {
 	used[ver] = true;
-	comp.emplace_back(ver);
+	comp.emplace_back(ver); // pushing comp
 	for (int child : v_rev[ver]) {
 		if (!used[child])
 			dfs2(child);
