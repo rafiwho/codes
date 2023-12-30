@@ -1,2 +1,0 @@
-name = "rafi"
-print(name)
