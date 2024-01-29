@@ -1,10 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#ifndef ONLINE_JUDGE
-#include "EMNI.HPP"
-#endif
-
 const int N = int(1e5) + 10;
 vector<int64_t>tree(4 * N);
 vector<int>v(N);

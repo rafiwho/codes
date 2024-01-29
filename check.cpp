@@ -1,28 +1,33 @@
 #include <bits/stdc++.h>
 using namespace std;
-constexpr int N = 1E7;
-vector<int>spf(N);
-void cal() {
-	for (int i = 1; i < N; ++i) {
-		spf[i] = i;
+
+void tcase() {
+	int n , k , m; cin >> n >> k >> m;
+	string s; cin >> s;
+	map<char, int> fre;
+	
+	for(char ch:s){
+		fre[ch]++;
 	}
-	for (int i = 2; i < N; i++) {
-		if (spf[i] == i) {
-			for (int j = i; j < N; j += i) {
-				spf[j] = min(spf[j], i);
-			}
+
+	for(auto [x,y]: fre){
+		if(y < n){
+			cout << "NO\n";
+			cout << string(n,x) << '\n';
+			return ;
 		}
 	}
-}
-void tcase() {
+
+	cout  << "YES\n";	
+	
 }
 int32_t main() {
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
+   ios_base::sync_with_stdio(false);
+   cin.tie(nullptr);
 
-	int t = 1;
-	//cin >> t;
+   int t = 1;
+   cin >> t;
 
-	while (t-- > 0)
-		tcase();
+   while (t-- > 0)
+     tcase();
 }
