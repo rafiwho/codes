@@ -30,7 +30,7 @@ int query(int node , int st, int en, int l, int r) {
 	}
 	int mid = (st + en) >> 1;
 	int q1 = query(2 * node, st, mid, l, r);
-	int q2 = query(2 * node, mid + 1, en, l, r);
+	int q2 = query(2 * node+1, mid + 1, en, l, r);
 	return min(q1, q2);
 }
 void update(int node , int st, int en, int idx, int val) {
