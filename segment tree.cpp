@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 constexpr int N = 100005;
-int a[N], t[N << 2], cnt[N << 2];
+int a[N], t[N << 2];
 int combine(int a, int b, int c = 0) {
 	return min(a, b);
 }
