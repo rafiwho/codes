@@ -1,68 +1,45 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
-
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(),(x).end()
-
-int n , k , sum = 0 , mx = INT_MIN ;
-vector<int>ans , checker;
-
-void func(int  i, vector<int>&v) {
-	if (sum <= n && sum > mx) {
-		mx = sum;
-		ans = checker;
-	}
-	for (int m = i; m < k; ++m) {
-		if (sum + v[m] <= n) {
-			sum += v[m];
-			checker.pb(v[m]);
-			func(m + 1 , v);
-			sum -= v[m];
-			checker.pop_back();
-		}
-	}
-}
-template<typename T>
-void output_vector(const vector<T> &v, bool add_one = false, int start = -1, int end = -1) {
-	if (start < 0) start = 0;
-	if (end < 0) end = int(v.size());
-
-	for (int i = start; i < end; i++)
-		cout << v[i] + (add_one ? 1 : 0) << ' ';
-}
 void tcase() {
-	while (cin >> n >> k) {
-		std::vector<int> v(k);
-
-		for (int i = 0; i < k; ++i) {
-			cin >> v[i];
-		}
-
-		func(0, v);
-		output_vector(ans);
-		cout << "sum:" << accumulate(all(ans), 0ll) << '\n';
-
-		ans.clear();
-		checker.clear();
-		sum = 0 , mx = INT_MIN;
-	}
+    int sum, n;
+    while (cin >> sum >> n) {
+        int arr[n];
+        for (int i = 0; i < n; ++i) {
+            cin >> arr[i];
+        }
+        vector<int> ans;
+        long long prev = 1E15;
+        function<void(int, long long, vector<int>&)> BT = [&](int i, long long cur, vector<int>& temp) -> void {
+            if (i == n) {
+                if (abs(cur - sum) < prev && cur <= sum) {
+                    ans = temp;
+                    prev = abs(cur - sum);
+                }
+                return;
+            }
+            temp.emplace_back(arr[i]);
+            BT(i + 1, cur + arr[i], temp);
+            temp.pop_back();
+            BT(i + 1, cur, temp);
+        };
+        vector<int> temp;
+        BT(0, 0, temp);
+        for (int x : ans)
+            cout << x << ' ';
+        cout << "sum:" << accumulate(ans.begin(), ans.end(), INT64_C(0)) << '\n';
+    }
 }
+
 int32_t main() {
-	ios_base::sync_with_stdio(0);
-	cin.tie(0);
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-	int t = 1;
-	//cin >> t;
+    int t = 1;
+    //cin >> t;
 
-	while (t-- > 0)
-		tcase();
+    while (t-- > 0)
+        tcase();
+
+    return 0;
 }

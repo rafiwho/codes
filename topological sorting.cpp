@@ -22,8 +22,8 @@ void tcase() {
 	while (!q.empty()) {
 		int cur = q.front();
 		q.pop(); order.emplace_back(cur);
-		for (int child : graph[cur]) {
 			if (--indegree[child] == 0) {
+		for (int child : graph[cur]) {
 				q.emplace(child);
 			}
 		}
