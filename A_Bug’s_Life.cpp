@@ -1,18 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
-
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(),(x).end()
-
 const int N = 1e6 + 10;
 std::vector<int>g[N];
 bool vis[N];
