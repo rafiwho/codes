@@ -1,48 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
-bool f = false;
-int n, m;
-vector<int>subset;
-void subset_gen(int index, int n, vector<int>&v) {
-  if (index == n) {
-    if (subset.size() > 0) {
-      int total = accumulate(subset.begin(), subset.end(), 0);
-      if (total % m == 0) {
-        f = true;
-        return;
+
+void tcase() {
+  string s; cin >> s;
+  int n = s.size();
+  int dp[n+1];
+  memset(dp,0,sizeof dp);
+  for (int i = 0; i < n; ++i) {
+    for (int j = i; j < n; ++j) {
+      if(s[i] == s[j] || s[i] == '?' || s[j] == '?'){
+        dp[j] = 1 + dp[i];
+      }else{
+        dp[j] = 1;
       }
     }
-  } else {
-    subset_gen(index + 1, n, v);
-    subset.push_back(v[index]);
-    subset_gen(index + 1, n, v);
-    subset.pop_back();
   }
+  cout << *max_element(dp,dp+n) << '\n';
 }
-void solve() {
-  cin >> n >> m;
-  vector<int>v(n);
-  for (auto &x : v) {
-    cin >> x;
-  }
-  if (n > m) {
-    cout << "Yes\n";
-    return;
-  }
-  subset_gen(0, n, v);
-  if (f) {
-    cout << "Yes\n";
-  } else {
-    cout << "No\n";
-  }
-}
-int main() {
-  ios_base::sync_with_stdio(false);
-  cin.tie(NULL);
-  int tc = 1;
-  // cin >> tc;
-  while (tc--) {
-    solve();
-  }
-  return 0;
+int32_t main() {
+   ios_base::sync_with_stdio(false);
+   cin.tie(nullptr);
+
+   int t = 1;
+   cin >> t;
+
+   while (t-- > 0)
+     tcase();
 }
