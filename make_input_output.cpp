@@ -9,7 +9,7 @@ void tcase() {
 	for (auto i = 1LL; i <= mx_input_output ; ++i) {
 		// fun is the sol of a given prob
 		auto fun = [&](int x, int y) {
-			ofstream myfle("input" + to_string(i) + ".txt"); // input1....100.txt
+			ofstream myfle(to_string(i) + ".in"); // input1....100.txt
 			myfle << x << " " << y; // pushing to my input file
 			int ticket_price = 0;
 
@@ -24,7 +24,7 @@ void tcase() {
 			} else {
 				ticket_price = 20;
 			}
-			ofstream myfile("output" + to_string(i) + ".txt");// output1...100.txt
+			ofstream myfile(to_string(i) + ".out");// output1...100.txt
 
 			if (ticket_price == 0) {
 				myfile << "Free\n"; // pushing to my output fill
