@@ -29,6 +29,11 @@ void tcase() {
 		v_rev[y].emplace_back(x);
 	}
 	for (int i = 1; i <= n; ++i) {
+		int x, y; cin >> x >> y;
+		v[x].emplace_back(y);
+		v_rev[y].emplace_back(x);
+	}
+	for (int i = 1; i <= n; ++i) {
 		if (!used[i])
 			dfs1(i);
 	}

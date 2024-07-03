@@ -15,9 +15,7 @@ void update(int indx , int value) {
 	for (; indx < N; indx += (indx & -indx)	)
 		bit[indx] += value;
 }
-long long sum(int l, int r) {
-        return sum(r) - sum(l - 1);
-}
+
 
 void tcase() {
 
