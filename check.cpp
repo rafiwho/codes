@@ -2,7 +2,10 @@
 using namespace std;
 
 void tcase() {
-	cout << set<int>({1, 23}).contains(12) << '\n';
+	for (int i = 0; i < 4; ++i) {
+		int x; cin >> x;
+		cout << bitset<10>(x) << '\n';
+	}
 }
 int32_t main() {
 
