@@ -2,9 +2,6 @@
 using namespace std;
 
 void tcase() {
-	set<int>st;
-	st.contains(12);
-	cout << st.contains(12) << '\n';
 }
 int32_t main() {
 
