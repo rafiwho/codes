@@ -2,10 +2,6 @@
 using namespace std;
 
 void tcase() {
-	for (int i = 0; i < 4; ++i) {
-		int x; cin >> x;
-		cout << bitset<10>(x) << '\n';
-	}
 }
 int32_t main() {
 
