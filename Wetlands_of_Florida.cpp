@@ -1,17 +1,6 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
-
-#define pb push_back
-#define in insert
-#define ff first
-#define ss second
-#define all(x) (x).begin(),(x).end()
 std::vector<string> v;
 
 int dx[] = {0, 1, 0, -1, 1, 1, -1, -1};
@@ -38,7 +27,7 @@ void dfs(int i , int j) {
 void tcase() {
 	string s;
 	while (getline(cin, s)) {
-		v.pb(s);
+		v.push_back(s);
 	}
 	int a , b;
 	while (cin >> a >> b) {
