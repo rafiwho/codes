@@ -1,11 +1,6 @@
 #include "bits/stdc++.h"
 using namespace std;
 
-#ifndef ONLINE_JUDGE
-#include "debug.h"
-#else
-#define debug(...)
-#endif
 
 #define pb push_back
 #define in insert
