@@ -29,11 +29,11 @@ void tcase() {
 			q.pop(); if (vis[cur_v])continue;
 			vis[cur_v] = true;
 
-			for (auto [c_v, c_w] : v[cur_v]) {
+			for (auto [child_v, child_w] : v[cur_v]) {
 
-				if (dis[cur_v] + c_w < dis[c_v]) {
-					dis[c_v] = dis[cur_v] + c_w;
-					q.push({dis[c_v], c_v});
+				if (dis[cur_v] + child_w < dis[child_v]) {
+					dis[child_v] = dis[cur_v] + child_w;
+					q.push({dis[child_v], child_v});
 				}
 
 			}
