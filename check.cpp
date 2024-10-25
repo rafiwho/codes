@@ -1,35 +1,16 @@
-#include<bits/stdc++.h>
-#define ll long long
+#include <bits/stdc++.h>
 using namespace std;
-int main() {
-	ios_base::sync_with_stdio(false), cin.tie(NULL);
-	int n;
-	cin >> n;
-	ll a[n];
-	for (int i = 0; i < n; i++) {
-		cin >> a[i];
-	}
-	ll gg = 0;
-	int ans = 2 * n;
 
-	for (int i = 0; i < n; i++) {
+void tcase() {
+}
+int32_t main() {
 
-		gg = __gcd(a[i], gg);
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
 
-		if (gg == 1) {
-			int j = i;
-			ll gg2 = 0;
+	int32_t t = 1;
+	//cin >> t;
 
-			while (i - j < ans and j >= 0 and gg2 != 1) {
-				gg2 = __gcd(a[j], gg2);
-				j--;
-			}
-
-			ans = min(ans, i - j);
-			gg = a[i];
-		}
-
-	}
-	cout << (ans == 2 * n ? -1 : ans) << '\n';
-	return 0;
+	while (t-- > 0)
+		tcase();
 }

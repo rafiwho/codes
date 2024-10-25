@@ -1,50 +1,30 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = 1E6 + 5;
-const int BIT = 31;
-using ll = long long;
-int nxt[N * BIT][2], cnt[N * BIT];
-int id = 1;
+const int N  = 1E5 + 5;
+vector<vector<int>>dp(N, vector<int>(3, -1));
+vector<array<int, 3>>v;
+int n;
 
-void add(int num) {
-	int cur_node = 1;
-	for (int k = BIT - 1; ~k; --k) {
-		if (nxt[cur_node][1 & num >> k] == 0) {
-			nxt[cur_node][1 & num >> k] = ++id;
-		}
-		cur_node = nxt[cur_node][1 & num >> k];
-		cnt[cur_node]++;
-	}
+int f(int i, int X) {
+	if (i >= n) return 0;
+	int &ans = dp[i][X];
+	if (~ans) return ans;
+	ans = 0;
+	for (int x : {0, 1, 2})
+		if (X ^ x)
+			ans = max(ans, v[i][x] + f(i + 1, x));
+
+	return ans;
 }
-
-ll gtr(int K, int tar) {
-	ll res = 0, cur_node = 1, cur_xor = 0;
-	for (int k = BIT - 1; ~k; --k) {
-		int tar_bit = 1 & tar >> k;
-		if ((cur_xor ^ 1 << k) >= K) {
-			res += cnt[nxt[cur_node][!tar_bit]];
-			cur_node = nxt[cur_node][tar_bit];
-		} else {
-			if (nxt[cur_node][!tar_bit] == 0) return res;
-			else cur_node = nxt[cur_node][!tar_bit] , cur_xor ^= 1 << k;
-		}
-	}
-	return res;
-}
-
 void tcase() {
-	int n, k;
-	cin >> n >> k;
-	int xr = 0;
-	add(xr);
-	ll ans = 0;
-	for (int i = 0; i < n; ++i) {
-		int x; cin >> x;
-		add(xr = xr ^ x);
-		ans += gtr(k, xr);
+	cin >> n;
+	v.resize(n);
+	for (auto &[x, y, z] : v) {
+		cin >> x >> y >> z;
 	}
-	cout << ans << '\n';
+	int ans = 0;
+	cout << max({f(0, 1), f(0, 0), f(0, 2)}) << '\n';
 }
 int32_t main() {
 
