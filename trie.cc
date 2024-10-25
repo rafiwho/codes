@@ -18,6 +18,7 @@ void add(int num) {
 	}
 }
 
+// number of prefix in the tree such that xor ^ tar >= k
 ll gtr(int K, int tar) {
 	ll res = 0, cur_node = 1, cur_xor = 0;
 	for (int k = BIT - 1; ~k; --k) {
