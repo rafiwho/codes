@@ -1,1 +1,15 @@
-46
+Enter the number of processes: 
+Choose Scheduling Algorithm:
+1. FCFS
+2. SJF (Non-Preemptive)
+3. Priority (Non-Preemptive)
+4. SJF (Preemptive)
+5. Round Robin
+6. Priority (Preemptive)
+Enter choice: Enter Arrival Time and Burst Time for Process 1: Enter Arrival Time and Burst Time for Process 2: Enter Arrival Time and Burst Time for Process 3: Enter Arrival Time and Burst Time for Process 4: Enter Arrival Time and Burst Time for Process 5: Enter Arrival Time and Burst Time for Process 6: Process   Burst Time     Arrival Time   Priority       Waiting Time   Turnaround Time
+1         3              2              45             0              3              
+2         5              4              45             1              6              
+3         0              7              45             3              3              
+4         0              0              45             10             10             
+5         0              0              45             10             10             
+6         0              0              45             10             10             

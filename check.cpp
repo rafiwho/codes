@@ -1,16 +1,1 @@
-#include <bits/stdc++.h>
-using namespace std;
-
-void tcase() {
-}
-int32_t main() {
-
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
-
-	int32_t t = 1;
-	//cin >> t;
-
-	while (t-- > 0)
-		tcase();
-}
+4 25 19 14 1 4 14 12 20 2 26 20 15 21 13 3 13 25 20 29 2 15 21 5 1 16 19 2 3
