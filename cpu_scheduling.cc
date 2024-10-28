@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 struct Process {
@@ -76,82 +76,72 @@ void Priority_NonPreemptive(vector<Process> &processes) {
 
 void SJF_Preemptive(vector<Process> &processes) {
     int currentTime = 0, completed = 0;
-    auto cmp = [&](int a, int b) { return processes[a].remainingTime > processes[b].remainingTime; };
-    priority_queue<int, vector<int>, decltype(cmp)> pq(cmp);
-
     while (completed != processes.size()) {
+        int idx = -1, minRemaining = INT_MAX;
         for (int i = 0; i < processes.size(); i++) {
-            if (processes[i].arrivalTime == currentTime && !processes[i].completed) {
-                pq.push(i);
+            if (processes[i].arrivalTime <= currentTime && !processes[i].completed && processes[i].remainingTime < minRemaining) {
+                minRemaining = processes[i].remainingTime;
+                idx = i;
             }
         }
 
-        if (!pq.empty()) {
-            int idx = pq.top();
-            pq.pop();
-            processes[idx].remainingTime--;
-
-            if (processes[idx].remainingTime == 0) {
-                processes[idx].completed = true;
-                completed++;
-                processes[idx].waitingTime = currentTime + 1 - processes[idx].arrivalTime - processes[idx].burstTime;
-                processes[idx].turnaroundTime = processes[idx].waitingTime + processes[idx].burstTime;
-            } else {
-                pq.push(idx);
-            }
+        if (idx == -1) {
             currentTime++;
-        } else {
-            currentTime++;
+            continue;
         }
+
+        processes[idx].remainingTime--;
+        if (processes[idx].remainingTime == 0) {
+            processes[idx].completed = true;
+            completed++;
+            processes[idx].waitingTime = currentTime + 1 - processes[idx].arrivalTime - processes[idx].burstTime;
+            processes[idx].turnaroundTime = processes[idx].waitingTime + processes[idx].burstTime;
+        }
+        currentTime++;
     }
 }
 
 void Priority_Preemptive(vector<Process> &processes) {
     int currentTime = 0, completed = 0;
-    auto cmp = [&](int a, int b) { return processes[a].priority > processes[b].priority; };
-    priority_queue<int, vector<int>, decltype(cmp)> pq(cmp);
-
     while (completed != processes.size()) {
+        int idx = -1, highestPriority = INT_MAX;
         for (int i = 0; i < processes.size(); i++) {
-            if (processes[i].arrivalTime == currentTime && !processes[i].completed) {
-                pq.push(i);
+            if (processes[i].arrivalTime <= currentTime && !processes[i].completed && processes[i].priority < highestPriority) {
+                highestPriority = processes[i].priority;
+                idx = i;
             }
         }
 
-        if (!pq.empty()) {
-            int idx = pq.top();
-            pq.pop();
-            processes[idx].remainingTime--;
-
-            if (processes[idx].remainingTime == 0) {
-                processes[idx].completed = true;
-                completed++;
-                processes[idx].waitingTime = currentTime + 1 - processes[idx].arrivalTime - processes[idx].burstTime;
-                processes[idx].turnaroundTime = processes[idx].waitingTime + processes[idx].burstTime;
-            } else {
-                pq.push(idx);
-            }
+        if (idx == -1) {
             currentTime++;
-        } else {
-            currentTime++;
+            continue;
         }
+
+        processes[idx].remainingTime--;
+        if (processes[idx].remainingTime == 0) {
+            processes[idx].completed = true;
+            completed++;
+            processes[idx].waitingTime = currentTime + 1 - processes[idx].arrivalTime - processes[idx].burstTime;
+            processes[idx].turnaroundTime = processes[idx].waitingTime + processes[idx].burstTime;
+        }
+        currentTime++;
     }
 }
 
 void RoundRobin(vector<Process> &processes, int timeQuantum) {
     int currentTime = 0, completed = 0;
-    deque<int> q;
-
-    for (int i = 0; i < processes.size(); i++) {
-        if (processes[i].arrivalTime <= currentTime && !processes[i].completed) {
-            q.push_back(i);
-        }
-    }
+    queue<int> q;
 
     while (completed != processes.size()) {
+        for (int i = 0; i < processes.size(); i++) {
+            if (processes[i].arrivalTime <= currentTime && !processes[i].completed) {
+                q.push(i);
+            }
+        }
+
         if (!q.empty()) {
             int idx = q.front();
-            q.pop_front();
+            q.pop();
 
             int execTime = min(timeQuantum, processes[idx].remainingTime);
             currentTime += execTime;
@@ -163,13 +153,7 @@ void RoundRobin(vector<Process> &processes, int timeQuantum) {
                 processes[idx].turnaroundTime = currentTime - processes[idx].arrivalTime;
                 processes[idx].waitingTime = processes[idx].turnaroundTime - processes[idx].burstTime;
             } else {
-                q.push_back(idx);
-            }
-
-            for (int i = 0; i < processes.size(); i++) {
-                if (processes[i].arrivalTime <= currentTime && !processes[i].completed && find(q.begin(), q.end(), i) == q.end()) {
-                    q.push_back(i);
-                }
+                q.push(idx);
             }
         } else {
             currentTime++;
