@@ -1,9 +1,6 @@
-#include <iostream>
-#include <vector>
-#include <functional>
-#include <algorithm>
-
+#include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
 template<typename T>
 struct HLD {
@@ -13,7 +10,6 @@ struct HLD {
 	vector<T> segtree;
 	int cur_pos;
 
-	// Function for custom operations
 	function<T(T, T)> combine;
 	T identity;
 
@@ -47,7 +43,6 @@ struct HLD {
 	void decompose(int u, int h) {
 		head[u] = h;
 		pos[u] = cur_pos++;
-
 		if (heavy[u] != -1) {
 			decompose(heavy[u], h);
 		}
@@ -65,7 +60,7 @@ struct HLD {
 			segtree[idx / 2] = combine(segtree[idx], segtree[idx ^ 1]);
 		}
 	}
-
+private:
 	T query(int l, int r) {
 		int n = cur_pos;
 		T res = identity;
@@ -75,7 +70,7 @@ struct HLD {
 		}
 		return res;
 	}
-
+public:
 	T query_path(int u, int v) {
 		T res = identity;
 		while (head[u] != head[v]) {
@@ -93,31 +88,48 @@ struct HLD {
 		decompose(root, root);
 	}
 };
+/*
+make everything 0 based
+after adding edge
+hld.initialize();
+*/
 
-int main() {
-	int n, q;
-	cin >> n >> q;
+void tcase() {
+	int n, m;
+	cin >> n >> m;
+	vector<int> v(n);
+	for (int i = 0; i < n; ++i) {
+		cin >> v[i];
+	}
+	HLD<int> hld(n, [](int a, int b) { return max(a, b); }, 0);
 
-	// Example with sum operation (can replace with min, max, etc.)
-	HLD<int> hld(n, [](int a, int b) { return a + b; }, 0);  // Sum operation with identity 0
+	for (int i = 0; i < n - 1; ++i) {
+		int a, b; cin >> a >> b;
+		hld.add_edge(a - 1, b - 1);
+	}
+	hld.initialize();
 
-	for (int i = 1; i < n; i++) {
-		int u, v;
-		cin >> u >> v;
-		hld.add_edge(u, v);
+	for (int i = 0; i < n; ++i) {
+		hld.update(hld.pos[i], v[i]);
 	}
 
-	hld.initialize(0);
-
-	while (q--) {
-		int type, u, v;
-		cin >> type >> u >> v;
-		if (type == 1) { // Update node u with value v
-			hld.update(hld.pos[u], v);
-		} else if (type == 2) { // Query over path from u to v
-			cout << hld.query_path(u, v) << endl;
+	while (m--) {
+		int type; cin >> type;
+		if (type == 1) {
+			int s, x; cin >> s >> x;
+			hld.update(hld.pos[s - 1], x);
+		} else {
+			int l, r; cin >> l >> r;
+			cout << hld.query_path(l - 1, r - 1) << '\n';
 		}
 	}
+}
 
-	return 0;
+int32_t main() {
+	ios_base::sync_with_stdio(false);
+	cin.tie(nullptr);
+
+	int32_t t = 1;
+	while (t-- > 0)
+		tcase();
 }
