@@ -1,6 +1,13 @@
 #include <bits/stdc++.h>
 using namespace std;
-
+/*
+	# end pos set
+	# end pos equivalent
+	# end pos equivalence class
+	# maximum number of end pos equiv class (maximum 2 * n)
+	# the longths of all substring of a certain equivalent set
+	# the freq of all subtring of a certain equiv set (is same)
+*/
 struct State {
 	int length, link;
 	std::map<char, int> transitions;
@@ -24,7 +31,7 @@ public:
 		int cur = states.size();
 		states.push_back({states[last].length + 1, 0, {}, 1});
 		int p = last;
-		while (p != -1 && !states[p].transitions.count(c)) {
+		while (p != -1 && !states[p].transitions.contains(c)) {
 			states[p].transitions[c] = cur;
 			p = states[p].link;
 		}
@@ -49,7 +56,7 @@ public:
 	bool contains(const std::string &substr) {
 		int current = 0;
 		for (char c : substr) {
-			if (!states[current].transitions.count(c)) return false;
+			if (!states[current].transitions.contains(c)) return false;
 			current = states[current].transitions[c];
 		}
 		return true;
@@ -118,7 +125,7 @@ public:
 	int longest_common_substring(const std::string &t) {
 		int current = 0, length = 0, best = 0;
 		for (char c : t) {
-			while (current != -1 && !states[current].transitions.count(c)) {
+			while (current != -1 && !states[current].transitions.contains(c)) {
 				current = states[current].link;
 				length = current == -1 ? 0 : states[current].length;
 			}
@@ -138,29 +145,47 @@ public:
 		}
 		return total;
 	}
-
 };
 void tcase() {
 	string s;
+	cout << "Enter a string: ";
 	cin >> s;
+
 	SuffixAutomaton sa(s);
-	auto ans = [&](char ch)->int64_t{
-		if (sa.states[0].transitions.count(ch) == 0) return 0;
-		return sa.count_substrings(sa.states[0].transitions[ch]);
-	};
-	for (char ch = 'a'; ch <= 'z'; ++ch) {
-		cout << ans(ch) << ' ';
-	}
+	sa.build();
+
+	cout << "Count of distinct substrings: " << sa.count_distinct_substrings() << "\n";
+
+	cout << "Enter substring to check for existence: ";
+	string check;
+	cin >> check;
+	cout << (sa.contains(check) ? "Substring exists" : "Substring does not exist") << "\n";
+
+	cout << "Enter k for the k-th lexicographical substring: ";
+	int k;
+	cin >> k;
+	string kth = sa.kth_substring(k);
+	cout << "The k-th lexicographical substring is: " << kth << "\n";
+
+	string t;
+	cout << "Enter another string to find the longest common substring: ";
+	cin >> t;
+	int longest = sa.longest_common_substring(t);
+	cout << "Length of longest common substring: " << longest << "\n";
+
+	cout << "Enter a substring to count occurrences: ";
+	string substr;
+	cin >> substr;
+	cout << "Occurrences of the substring: " << sa.count_occurrences(substr) << "\n";
 }
 int32_t main() {
+
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
 
 	int32_t t = 1;
-	// cin >> t;
+	//cin >> t;
 
 	while (t-- > 0)
 		tcase();
-
-	return 0;
 }
