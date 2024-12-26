@@ -38,6 +38,7 @@ void tcase() {
 		if (!f)
 			break;
 	}
+	
 
 	cout << "Scenario #" << ++xx << ":\n";
 	cout << (!f ? "Suspicious bugs found!\n" : "No suspicious bugs found!\n");
