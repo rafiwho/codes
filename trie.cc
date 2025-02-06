@@ -1,51 +1,75 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-const int N = 1E6 + 5;
-const int BIT = 31;
-using ll = long long;
-int nxt[N * BIT][2], cnt[N * BIT];
+const int N = 250000 * 32;
+const int A = 26;
 int id = 1;
-
-void add(int num) {
-	int cur_node = 1;
-	for (int k = BIT - 1; ~k; --k) {
-		if (nxt[cur_node][1 & num >> k] == 0) {
-			nxt[cur_node][1 & num >> k] = ++id;
+int nxt[N][A];
+set<int>st[N];
+void add(string s, int i) {
+	reverse(s.begin(), s.end());
+	int cur = 1;
+	st[cur].insert(i);
+	for (char ch : s) {
+		ch -= 'a';
+		if (nxt[cur][ch] == 0) {
+			nxt[cur][ch] = ++id;
 		}
-		cur_node = nxt[cur_node][1 & num >> k];
-		cnt[cur_node]++;
+		cur = nxt[cur][ch];
+		st[cur].insert(i);
 	}
 }
-
-// number of prefix in the tree such that xor ^ tar >= k
-ll gtr(int K, int tar) {
-	ll res = 0, cur_node = 1, cur_xor = 0;
-	for (int k = BIT - 1; ~k; --k) {
-		int tar_bit = 1 & tar >> k;
-		if ((cur_xor ^ 1 << k) >= K) {
-			res += cnt[nxt[cur_node][!tar_bit]];
-			cur_node = nxt[cur_node][tar_bit];
+int Get_Id(string s) {
+	reverse(s.begin(), s.end());
+	int cur = 1;
+	for (char ch : s) {
+		ch -= 'a';
+		if (nxt[cur][ch] && !st[nxt[cur][ch]].empty()) {
+			cur = nxt[cur][ch];
 		} else {
-			if (nxt[cur_node][!tar_bit] == 0) return res;
-			else cur_node = nxt[cur_node][!tar_bit] , cur_xor ^= 1 << k;
+			return *st[cur].begin();
 		}
 	}
-	return res;
+	return *st[cur].begin();
 }
-
-void tcase() {
-	int n, k;
-	cin >> n >> k;
-	int xr = 0;
-	add(xr);
-	ll ans = 0;
-	for (int i = 0; i < n; ++i) {
-		int x; cin >> x;
-		add(xr = xr ^ x);
-		ans += gtr(k, xr);
+void rem(string s, int i) {
+	reverse(s.begin(), s.end());
+	int cur = 1;
+	st[cur].erase(i);
+	for (char ch : s) {
+		ch -= 'a';
+		cur = nxt[cur][ch];
+		st[cur].erase(i);
 	}
-	cout << ans << '\n';
+}
+void tcase() {
+	string s;
+	bool yo = true;
+	vector<string>L, Q;
+	while (getline(cin, s)) {
+		if (yo && s != "") {
+			L.push_back(s);
+		} else {
+			if (s == "") {
+				yo = false;
+			} else {
+				Q.push_back(s);
+			}
+		}
+	}
+	sort(L.begin(), L.end());
+	std::map<string, int> id;
+	for (int i = 0; i < L.size(); ++i) {
+		id[L[i]] = i;
+		add(L[i], i);
+	}
+	for (int i = 0; i < Q.size(); ++i) {
+		if (id.count(Q[i]))
+			rem(Q[i], id[Q[i]]);
+		cout << L[Get_Id(Q[i])] << '\n';
+		if (id.count(Q[i]))
+			add(Q[i], id[Q[i]]);
+	}
+
 }
 int32_t main() {
 

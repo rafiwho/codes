@@ -1,53 +1,20 @@
 #include <bits/stdc++.h>
 using namespace std;
-
-const int N = 1E5 + 5;
-int timer = 1, n, m;
-
-vector<array<int, 2>>v[N];
-vector<int>in(N), low(N);
-vector<bool> vis(N);
-vector<array<int, 2>>edges;
-std::map<array<int, 2>, bool> vis_edges;
-
-void dfs(int ver, int par) {
-  vis[ver] = true;
-  in[ver] = low[ver] = timer++;
-  for (auto [nei, i] : v[ver]) {
-    if (nei == par) continue;
-
-    if (vis[nei] == 0) {
-      if (!vis_edges.contains({ver, nei})) {
-        vis_edges[ {ver, nei}] = true;
-        edges.push_back({ver, nei});
+constexpr int N = 1E7;
+vector<int>spf(N);
+void cal() {
+  for (int i = 1; i < N; ++i) {
+    spf[i] = i;
+  }
+  for (int i = 2; i < N; i++) {
+    if (spf[i] == i) {
+      for (int j = i; j < N; j += i) {
+        spf[j] = min(spf[j], i);
       }
-      dfs(nei, ver);
-      low[ver] = min(low[nei], low[ver]);
-      if (low[nei] > in[ver]) {
-        cout << 0 << '\n';
-        exit(0);
-      }
-    } else {
-      if (!vis_edges.contains({nei, ver})) {
-        vis_edges[ {ver, nei}] = true;
-        edges.push_back({ver, nei});
-      }
-      low[ver] = min(low[nei], low[ver]);
     }
   }
 }
-
 void tcase() {
-  cin >> n >> m;
-  for (int i = 0; i < m; ++i) {
-    int x, y; cin >> x >> y;
-    v[x].push_back({y, i});
-    v[y].push_back({x, i});
-  }
-  dfs(1, -1);
-  for (auto [x, y] : edges) {
-    cout << x << ' ' << y << '\n';
-  }
 }
 int32_t main() {
 
