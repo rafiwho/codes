@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-const int N = int(2e5) + 10;
+const int N = int(4e5) + 10;
 const int INF = int(2E9) + 7;
 
 struct Node {

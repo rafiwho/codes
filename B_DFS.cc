@@ -1,12 +1,5 @@
-#include "iostream"
-#include "vector"
-#include "map"
+#include <bits/stdc++.h>
 using namespace std;
-
-#define pb push_back
-#define ff first
-#define ss second
-
 const int N = 110;
 std::vector<int> g[N];
 bool vis[N];
@@ -16,13 +9,13 @@ int t = 1;
 inline void dfs(int vertex) {
 	if (vis[vertex])
 		return ;
-	mp[vertex].ff = t;
+	mp[vertex].first = t;
 	t++;
 	vis[vertex] = true;
 	for (int child : g[vertex]) {
 		dfs(child);
 	}
-	mp[vertex].ss = t;
+	mp[vertex].second = t;
 	t++;
 }
 
@@ -36,7 +29,7 @@ void tcase() {
 		for (int i = 0; i < m; ++i) {
 			int a;
 			cin >> a;
-			g[x].pb(a);
+			g[x].push_back(a);
 		}
 	}
 
@@ -46,7 +39,7 @@ void tcase() {
 	}
 
 	for (auto a : mp) {
-		cout << a.ff << ' ' << a.ss.ff << ' ' << a.ss.ss << '\n';
+		cout << a.first << ' ' << a.second.first << ' ' << a.second.second << '\n';
 	}
 }
 int32_t main() {

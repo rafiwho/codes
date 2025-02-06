@@ -13,7 +13,7 @@ void tcase() {
         cin >> weight[i] >> value[i];
     }
     for (int i = 1; i <= n; ++i) {
-        for (int w = max_cap; w >= 0; --w) { 
+        for (int w = max_cap; w >= 0; --w) {
             if (w - weight[i] >= 0) {
                 long long &ans = dp[w];
                 ans = max(ans, dp[w - weight[i]] + value[i]);

@@ -1,53 +1,52 @@
 #include <bits/stdc++.h>
 using namespace std;
-#undef _GLIBCXX_HAVE_ICONV
-#include <bits/extc++.h>
 
-template<class T>
-using o_set = __gnu_pbds::tree<T, __gnu_pbds::null_type, less_equal<T>, __gnu_pbds::rb_tree_tag, __gnu_pbds::tree_order_statistics_node_update>;
+const int N = 1E5 + 5;
+int timer = 1, n, m;
 
-struct info {
-  int ac = 0;
-  int wa = 0;
-  int score = 0;
-};
+vector<array<int, 2>>v[N];
+vector<int>in(N), low(N);
+vector<bool> vis(N);
+vector<array<int, 2>>edges;
+std::map<array<int, 2>, bool> vis_edges;
+
+void dfs(int ver, int par) {
+  vis[ver] = true;
+  in[ver] = low[ver] = timer++;
+  for (auto [nei, i] : v[ver]) {
+    if (nei == par) continue;
+
+    if (vis[nei] == 0) {
+      if (!vis_edges.contains({ver, nei})) {
+        vis_edges[ {ver, nei}] = true;
+        edges.push_back({ver, nei});
+      }
+      dfs(nei, ver);
+      low[ver] = min(low[nei], low[ver]);
+      if (low[nei] > in[ver]) {
+        cout << 0 << '\n';
+        exit(0);
+      }
+    } else {
+      if (!vis_edges.contains({nei, ver})) {
+        vis_edges[ {ver, nei}] = true;
+        edges.push_back({ver, nei});
+      }
+      low[ver] = min(low[nei], low[ver]);
+    }
+  }
+}
 
 void tcase() {
-  int k, n; cin >> k >> n;
-  cin.ignore();
-
-  int64_t start = -1;
-  o_set<int>rank;
-  vector<info>team(k + 1);
-
-  auto mili = [](string & time) -> long long {
-    int hours, minutes, seconds, milliseconds;
-    char ch;
-    stringstream ss(time);
-    ss >> hours >> ch >> minutes >> ch >> seconds >> ch >> milliseconds;
-    return (int64_t(hours) * 60 * 60 + seconds) * 1000 + milliseconds;
-  };
-
-  for (int i = 0; i < n; ++i) {
-    string s;
-    getline(cin, s);
-    stringstream ss(s);
-    vector<string>tmp;
-    string word;
-    while (ss >> word) {
-      tmp.push_back(word);
-    }
-    int team_id = stoi(tmp[1]);
-    char problemid = tmp[2];
-
-    if (start == -1 && tmp.back() == "AC") {
-      start = mili(tmp[0]);
-    }
-    if (start != -1) {
-      int name = stoi(tmp[1]);
-      int64_t penalty = start + 20 * team[name].wa;
-      team[name].score
-    }
+  cin >> n >> m;
+  for (int i = 0; i < m; ++i) {
+    int x, y; cin >> x >> y;
+    v[x].push_back({y, i});
+    v[y].push_back({x, i});
+  }
+  dfs(1, -1);
+  for (auto [x, y] : edges) {
+    cout << x << ' ' << y << '\n';
   }
 }
 int32_t main() {
@@ -56,7 +55,7 @@ int32_t main() {
   cin.tie(nullptr);
 
   int32_t t = 1;
-  // cin >> t;
+  //cin >> t;
 
   while (t-- > 0)
     tcase();

@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-constexpr int N = 1e5;
+constexpr int N = 1e6 + 5;
 vector<int>v[N];
 int depth[N];
 void dfs(int ver, int par = 0) {
