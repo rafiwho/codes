@@ -1,17 +1,17 @@
 #include <bits/stdc++.h>
 using namespace std;
 /*
-	# end pos set
-	# end pos equivalent
-	# end pos equivalence class
-	# maximum number of end pos equiv class (maximum 2 * n)
-	# the longths of all substring of a certain equivalent set
-	# the freq of all subtring of a certain equiv set (is same)
+        # end pos set
+        # end pos equivalent
+        # end pos equivalence class
+        # maximum number of end pos equiv class (maximum 2 * n)
+        # the longths of all substring of a certain equivalent set
+        # the freq of all subtring of a certain equiv set (is same)
 */
 struct State {
 	int length, link;
 	std::map<char, int> transitions;
-	int cnt; // For counting occurrences
+	int cnt;                  // For counting occurrences
 	long long num_substrings; // Number of unique substrings from this state
 };
 
@@ -23,7 +23,8 @@ public:
 	SuffixAutomaton(const std::string &s) {
 		states.push_back({0, -1});
 		last = 0;
-		for (char c : s) add_char(c);
+		for (char c : s)
+			add_char(c);
 		count_substrings(0);
 	}
 
@@ -43,7 +44,8 @@ public:
 				states[cur].link = q;
 			} else {
 				int clone = states.size();
-				states.push_back({states[p].length + 1, states[q].link, states[q].transitions, 0});
+				states.push_back(
+				{states[p].length + 1, states[q].link, states[q].transitions, 0});
 				while (p != -1 && states[p].transitions[c] == q) {
 					states[p].transitions[c] = clone;
 					p = states[p].link;
@@ -56,7 +58,8 @@ public:
 	bool contains(const std::string &substr) {
 		int current = 0;
 		for (char c : substr) {
-			if (!states[current].transitions.contains(c)) return false;
+			if (!states[current].transitions.contains(c))
+				return false;
 			current = states[current].transitions[c];
 		}
 		return true;
@@ -66,11 +69,13 @@ public:
 		int sz = states.size();
 		std::vector<int> indegree(sz, 0);
 		for (int i = 0; i < sz; ++i) {
-			if (states[i].link != -1) indegree[states[i].link]++;
+			if (states[i].link != -1)
+				indegree[states[i].link]++;
 		}
 		std::queue<int> q;
 		for (int i = 0; i < sz; ++i) {
-			if (indegree[i] == 0) q.push(i);
+			if (indegree[i] == 0)
+				q.push(i);
 		}
 		while (!q.empty()) {
 			int cur = q.front();
@@ -85,7 +90,8 @@ public:
 	}
 	// Count the number of unique substrings from a given state
 	long long count_substrings(int state) {
-		if (states[state].num_substrings != 0) return states[state].num_substrings;
+		if (states[state].num_substrings != 0)
+			return states[state].num_substrings;
 		long long cnt = 1;
 		for (auto &[c, next_state] : states[state].transitions) {
 			cnt += count_substrings(next_state);
@@ -97,7 +103,8 @@ public:
 	int count_occurrences(const std::string &substr) {
 		int current = 0;
 		for (char c : substr) {
-			if (!states[current].transitions.count(c)) return 0;
+			if (!states[current].transitions.count(c))
+				return 0;
 			current = states[current].transitions[c];
 		}
 		return states[current].cnt;
@@ -141,7 +148,8 @@ public:
 	long long count_distinct_substrings() {
 		long long total = 0;
 		for (const auto &state : states) {
-			total += state.length - (state.link == -1 ? 0 : states[state.link].length);
+			total +=
+			   state.length - (state.link == -1 ? 0 : states[state.link].length);
 		}
 		return total;
 	}
@@ -154,12 +162,14 @@ void tcase() {
 	SuffixAutomaton sa(s);
 	sa.build();
 
-	cout << "Count of distinct substrings: " << sa.count_distinct_substrings() << "\n";
+	cout << "Count of distinct substrings: " << sa.count_distinct_substrings()
+	     << "\n";
 
 	cout << "Enter substring to check for existence: ";
 	string check;
 	cin >> check;
-	cout << (sa.contains(check) ? "Substring exists" : "Substring does not exist") << "\n";
+	cout << (sa.contains(check) ? "Substring exists" : "Substring does not exist")
+	     << "\n";
 
 	cout << "Enter k for the k-th lexicographical substring: ";
 	int k;
@@ -176,7 +186,8 @@ void tcase() {
 	cout << "Enter a substring to count occurrences: ";
 	string substr;
 	cin >> substr;
-	cout << "Occurrences of the substring: " << sa.count_occurrences(substr) << "\n";
+	cout << "Occurrences of the substring: " << sa.count_occurrences(substr)
+	     << "\n";
 }
 int32_t main() {
 
@@ -184,7 +195,7 @@ int32_t main() {
 	cin.tie(nullptr);
 
 	int32_t t = 1;
-	//cin >> t;
+	// cin >> t;
 
 	while (t-- > 0)
 		tcase();
