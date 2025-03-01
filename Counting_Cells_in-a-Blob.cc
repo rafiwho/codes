@@ -1,7 +1,5 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
-#define pb push_back
-////////////////////
 std::vector<string> v;
 
 int dx[] = {0, 1, 0, -1, 1, 1, -1, -1};
@@ -31,7 +29,7 @@ void tcase() {
 
 	string s;
 	while (getline(cin , s) && int(s.size())) {
-		v.pb(s);
+		v.push_back(s);
 	}
 
 	int ans = 0;
