@@ -1,18 +1,13 @@
-int dp[10][90][90][2];
-int fun(int pos, int digSum, int dig, int smaint){
-  if(pos==num.size()){
-    if(!dig and !digSum) return 1;
-    return 0;
+int dp[10][2][11];
+int f(int pos, bool tight, int cnt1) {
+  if (pos == size(num)) return cnt1;
+  int &ans = dp[pos][tight][cnt1];
+  if (~ans) return ans;
+  ans = {};
+  int lim = tight ? num[pos] - '0' : 9;
+  for (int d = 0; d <= lim; ++d) {
+    ans += f(pos + 1, tight && (d == lim), cnt1 + (d == 1));
   }
-  if(dp[pos][digSum][dig][smaint] != -1) return dp[pos][digSum][dig][smaint];
-  int ans = 0;
-  int limit = num[pos];
-  if(smaint == 1) limit = 9;
-  for(int i=0; i<=limit; i++){
-    int nsm = (i < num[pos] || smaint);
-    int ndigSum = (digSum + i) % c;
-    int ndig = (dig* 10 + i) % c;
-    ans += fun(pos+1, ndigSum, ndig, nsm);
-  }
-  return dp[pos][digSum][dig][smaint] = ans;
+  return ans;
 }
+// count of fre[1] from 1 to N

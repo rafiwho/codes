@@ -1,26 +1,24 @@
 #include <bits/stdc++.h>
 using namespace std;
-constexpr int mod = 1E9 + 7;
-void add(int &a, int b) {
-	a = (a + b) % mod;
-}
-void sub(int &a, int b) {
-	a = (a - b + mod) % mod;
-}
-int mul(int a, int b) {
-	return (int64_t(a) * b) % mod;
-}
+using ll = long long;
+
 void tcase() {
-
+  int n, m; cin >> n >> m;
+  vector<pair<set<int>, set<int>>> v(n + 1);
+  for(int i = 0; i < m; ++i) {
+    int l,r,d; cin >> l >> r >> d;
+    v[l].
+  }
 }
-int32_t main() {
 
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
 
-	int32_t t = 1;
-	//cin >> t;
+    int t = 1;
+    // cin >> t;
 
-	while (t-- > 0)
-		tcase();
+    while (t--) {
+        tcase();
+    }
 }
